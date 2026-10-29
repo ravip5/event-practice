@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="EventPractice.Functions/EventPractice.Functions.csproj" />
+  <Project Path="EventPractice.Producer/EventPractice.Producer.csproj" />
+</Solution>
