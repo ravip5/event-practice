@@ -9,13 +9,17 @@ const string hubName = "employee-events";
 await using var producer = new EventHubProducerClient(connectionString, hubName);
 using EventDataBatch batch = await producer.CreateBatchAsync();
 
+
+
+var duplicateId = Guid.NewGuid();
 var events = new List<string>
 {
-    JsonSerializer.Serialize(new { Id = Guid.NewGuid(), EventType = "EmployeeCreated", Name = "Ravi", Department = "IT" }),
+    JsonSerializer.Serialize(new { Id = duplicateId, EventType = "EmployeeCreated", Name = "Ravi", Department = "IT" }),
+    JsonSerializer.Serialize(new { Id = duplicateId, EventType = "EmployeeCreated", Name = "Ravi duplicate", Department = "IT" }),
     JsonSerializer.Serialize(new { Id = Guid.NewGuid(), EventType = "EmployeeDeleted", Name = "Amit", Department = "HR" }),
     "{ yeh kharab json hai",
-    JsonSerializer.Serialize(new { EventType = "EmployeeCreated", Name = "Bina Id", Department = "IT" }),
-    JsonSerializer.Serialize(new { Id = Guid.NewGuid(), EventType = "EmployeeCreated", Name = "Priya", Department = "Finance" })
+    JsonSerializer.Serialize(new { Id = Guid.NewGuid(), EventType = "EmployeeCreated", Name = "Priya", Department = "Finance" }),
+    JsonSerializer.Serialize(new { Id = Guid.NewGuid(), EventType = "EmployeeCreated", Name = "Fail Test", Department = "IT" }),
 };
 
 foreach (var json in events)
